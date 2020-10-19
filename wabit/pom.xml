@@ -22,9 +22,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-
-		<angular.project.location>AngularWAB</angular.project.location>
-		<angular.project.nodeinstallation>node_installation</angular.project.nodeinstallation>
 	</properties>
 
 	<dependencies>
@@ -92,13 +89,13 @@
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
- 		<dependency>
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.13</version>
 		</dependency>
-  
-  		<!-- elasticsearch -->
+
+		<!-- elasticsearch -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-elasticsearch</artifactId>
@@ -216,12 +213,12 @@
 			<version>21.0</version>
 		</dependency>
 
-
 		<dependency>
 			<groupId>org.javassist</groupId>
 			<artifactId>javassist</artifactId>
 			<version>3.22.0-GA</version>
 		</dependency>
+
 
 		<!-- https://mvnrepository.com/artifact/org.elasticsearch.plugin/transport-netty3-client -->
 		<dependency>
@@ -241,90 +238,58 @@
 
 	</dependencies>
 
-
-
 	<build>
-		<finalName>wabSpring</finalName>
+	<finalName>wabITSpring</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
-				<groupId>com.github.eirslett</groupId>
-				<artifactId>frontend-maven-plugin</artifactId>
-				<version>1.0</version>
-				<configuration>
-					<workingDirectory>${angular.project.location}</workingDirectory>
-					<installDirectory>${angular.project.nodeinstallation}</installDirectory>
-				</configuration>
-				<executions>
-					<!-- It will install nodejs and npm -->
-					<execution>
-						<id>install node and npm</id>
-						<goals>
-							<goal>install-node-and-npm</goal>
-						</goals>
-						<configuration>
-							<nodeVersion>v12.18.2</nodeVersion>
-							<npmVersion>6.14.5</npmVersion>
-						</configuration>
-					</execution>
-
-					<!-- It will execute command "npm install" inside "/e2e-angular2" directory -->
-					<execution>
-						<id>npm install</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<configuration>
-							<arguments>install</arguments>
-						</configuration>
-					</execution>
-					<!-- It will execute command "npm build" inside "/e2e-angular2" directory 
-						to clean and create "/dist" directory -->
-					<execution>
-						<id>npm build</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<configuration>
-							<arguments>run build</arguments>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
-			<!-- Plugin to copy the content of /angular/dist/ directory to output 
-				directory (ie/ /target/transactionManager-1.0/) -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.4.2</version>
-				<executions>
-					<execution>
-						<id>default-copy-resources</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<overwrite>true</overwrite>
-							<!-- This folder is the folder where your angular files will be copied 
-								to. It must match the resulting war-file name. So if you have customized 
-								the name of war-file for ex. as "app.war" then below value should be ${project.build.directory}/app/ 
-								Value given below is as per default war-file name -->
-							<outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}/</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${project.basedir}/${angular.project.location}/dist</directory>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>${maven-war-plugin.version}</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>war</goal>
+							</goals>
+							<phase>package</phase>
+						</execution>
+					</executions>
+					<configuration>
+						<warSourceIncludes>WEB-INF/**,META-INF/**</warSourceIncludes>
+						<failOnMissingWebXml>false</failOnMissingWebXml>
+						<warSourceDirectory>target/classes/static/</warSourceDirectory>
+						<webResources>
+							<resource>
+								<directory>src/main/webapp</directory>
+								<includes>
+									<include>WEB-INF/**</include>
+								</includes>
+							</resource>
+						</webResources>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>war</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 </project>

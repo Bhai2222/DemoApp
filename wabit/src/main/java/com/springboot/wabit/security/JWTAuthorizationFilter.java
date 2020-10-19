@@ -40,10 +40,10 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         System.out.println("request ===" + request.getHeader("Authorization"));
         
         
-       if (header == null || !header.startsWith(TOKEN_PREFIX)) {
+        if (header == null || !header.startsWith(TOKEN_PREFIX)) {
             chain.doFilter(request, response);
             return;
-        } 
+        }
         UsernamePasswordAuthenticationToken authenticationToken = getAuthenticationToken(request);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         chain.doFilter(request, response);

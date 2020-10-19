@@ -4,8 +4,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.boot.web.servlet.support.ErrorPageFilter;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -22,19 +20,6 @@ public class WabitApplication extends SpringBootServletInitializer {
 		return new JedisConnectionFactory();
 	}
 
-	@Bean
-	public ErrorPageFilter errorPageFilter() {
-	    return new ErrorPageFilter();
-	}
-
-	@Bean
-	public FilterRegistrationBean disableSpringBootErrorFilter(ErrorPageFilter filter) {
-	    FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-	    filterRegistrationBean.setFilter(filter);
-	    filterRegistrationBean.setEnabled(false);
-	    return filterRegistrationBean;
-	}
-	
 	@Bean 
 	RedisTemplate<String, String> redisTemplate() {
 		RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
