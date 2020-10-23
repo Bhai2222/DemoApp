@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+ <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -9,7 +9,7 @@
 	<packaging>war</packaging>
 
 	<name>wabit</name>
-	<description>Demo project for Spring Boot</description>
+	<description>DemoWabIT</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -161,6 +161,13 @@
 			<artifactId>tomcat-embed-jasper</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+
 		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-tomcat</artifactId> 
 			<scope>provided</scope> </dependency> -->
 		<dependency>
@@ -239,7 +246,7 @@
 	</dependencies>
 
 	<build>
-	<finalName>wabITSpring</finalName>
+		<finalName>wabITSpringDemo</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -293,3 +300,4 @@
 	</profiles>
 
 </project>
+ 

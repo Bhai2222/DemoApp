@@ -123,6 +123,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.addFilter(new JWTAuthorizationFilter(authenticationManager(), customUserDetailService));
 	}
 
+//	 @Override
+//	    protected void configure(HttpSecurity http) throws Exception {
+//	        http.csrf().disable().authorizeRequests().anyRequest().permitAll();
+//	    }
+//	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(customUserDetailService).passwordEncoder(new BCryptPasswordEncoder());
